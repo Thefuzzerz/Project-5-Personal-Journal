@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block title %}{{ super() }} - {{user.username.upper()}}'s Entries{% endblock %}
+
+{% block content %}
+<p id="main_header">{{ user.username.upper() }}'s Journal</p>
+  <section>
+    {% for entry in journal %}
+    <article>
+      <div class="d-flex w-100 justify-content-between">
+        <a href="{{url_for('details', entry=entry.title|slugify)}}" class="display-anchor list-group-itm list-group-item-action">
+          <h1 class="entry_title mb-2">{{ entry.title|title }}</h1>
+          <small>Date: {{ entry.date.strftime('%Y-%m-%d') }}</small>
+        </a>
+      </div>
+      <p class="small-header">TAGS - CLICK ON TAG FOR SIMILAR TAGGED JOURNALS</p>
+      <div class="d-flex w-100 justify-content-start">
+        {% for tag in entry.tags|string_filter %}
+        {% if tag == '' %}
+        <p>No Tags</p>
+        {% else %}
+        <a class="list-group-itm" href="{{url_for('tags',tag=tag|slugify)}}">
+        {{ tag }}
+        </a>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <br><br><br><br>
+      {% endfor %}
+    </article>
+  </section>
+{% endblock %}

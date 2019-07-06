@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block title %}{{ super() }} - Delete Entry{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ rev_slug.upper() }}</h1>
+  <br>
+  <h5>Are you sure you want to delete the entry?</h5>
+  <br>
+  <form method="POST">
+    <input type="submit" value="Yes" name="choice" class="button button-secondary">
+    <input type="submit" value="No" name="choice" class="button button-secondary">
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% block title %}{{ super() }} - Welcome{% endblock %}
+
+{% block content %}
+<section>
+  <article>
+    <div class="container">
+        <h5 id="main_header">Personal Journal</h5>
+        <br>
+        <p id="minor-header">with Treehouse</p>
+        {% if user %}
+        <p style="text-align: center; font-size: 40px;">Welcome {{ user.username.upper() }}</p>
+        {% endif %}
+    </div>
+    <div class="container">
+    {% if journal.count() %}
+    <p>RECENT ENTRIES</p>
+      <div class="list-group">
+        {% for entry in journal %}
+        <div class="break-bar">
+        </div>
+        <a href="{{url_for('details', entry=entry.title|slugify)}}" class="list-group-item list-group-item-action display-anchor">
+          <div class="d-flex w-100 justify-content-between">
+            <h1 class="entry_title mb-2">{{ entry.title|title }}</h1>
+            <small>Journal Date: {{ entry.date.strftime('%Y-%m-%d') }}</small>
+            <small>User: {{ entry.user.username}}</small>
+          </div>
+        </a>
+        <div class="d-flex w-100 justify-content-start">
+          <a class="disabled list-group-itm" href="#">TAGS:</a>
+          {% for tag in entry.tags|string_filter %}
+          {% if tag == '' %}
+          <a class="disabled list-group-itm" href="#">NO TAGS</a>
+          {% else %}
+          <a class="list-group-itm" href="{{url_for('tags',tag=tag|slugify)}}">
+          {{ tag }}
+          </a>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <br>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="container">
+        <div class="break-bar">
+          <h1 class="entry_title mb-2">No Recent Entries</h1>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </article>
+</section>
+{% endblock %}

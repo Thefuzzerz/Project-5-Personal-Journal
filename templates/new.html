@@ -1,0 +1,28 @@
+{% extends 'layout.html '%}
+{% block title %}{{ super() }} - New Entry{% endblock %}
+
+{% block content %}
+<section>
+  <div class="container">
+    <div class="new-entry">
+      <h2>New Entry</h2>
+      <form method="POST">
+          <label for="title">Title - No Special Characters</label>
+          <input id="title" type="text" name="title" required><br>
+          <label for="date">Date</label>
+          <input id="date" type="date" name="date" required><br>
+          <label for="time-spent"> Time Spent</label>
+          <input id="time-spent" type="number" name="timeSpent" required><br>
+          <label for="what-i-learned">What I Learned</label>
+          <textarea id="what-i-learned" rows="5" name="whatILearned" required></textarea>
+          <label for="resources-to-remember">Resources to Remember - Seperate With a Comma</label>
+          <textarea id="resources-to-remember" rows="5" name="ResourcesToRemember"></textarea>
+          <label for="tags">Tags - Seperate With a Comma - No other Special Characters</label>
+          <textarea id="tags" rows="3" name="form_tag"></textarea>
+          <input type="submit" value="Publish Entry" class="button button-secondary">
+          <a href="{{ url_for('index')}}" class="button button-secondary">Cancel</a>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

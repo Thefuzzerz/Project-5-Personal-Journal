@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% block title %}{{ super() }} - Detailed View{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <div class="d-flex w-100">
+    <h1 class="display-4">{{entry.title}}&nbsp&nbsp</h1>
+  </div>
+  {% if owner == True %}
+  <small>
+    <a class="btn-edit" href="{{url_for('edit',entry=entry.title|slugify, value='title')}}">EDIT TITLE</a>
+    <a class="btn-edit" href="{{url_for('delete',entry=entry.title|slugify)}}">DELETE ENTRY</a>
+  </small>
+  {% endif %}
+  <br>
+  <br>
+  <br>
+  <p class="small-header">
+    {% if owner == True %}
+    <a class="btn-edit" href="{{url_for('edit',entry=entry.title|slugify, value='date')}}">EDIT</a>
+    {% endif %}
+    &nbsp&nbspJournal Date:
+  </p>
+  <p class="list-group-item">{{ entry.date.strftime('%Y-%m-%d')}}</p>
+  <br>
+  <br>
+  <p class="small-header">
+    {% if owner == True %}
+    <a class="btn-edit" href="{{url_for('edit',entry=entry.title|slugify, value='time_spent')}}">EDIT</a>
+    {% endif %}
+    &nbsp&nbspTIME SPENT
+  </p>
+  <p class="list-group-item">{{ entry.time_spent }}</p>
+  <br>
+  <br>
+  <br>
+  <p class="small-header">
+    {% if owner == True %}
+    <a class="btn-edit" href="{{url_for('edit',entry=entry.title|slugify, value='learned')}}">EDIT</a>
+    {% endif %}
+    &nbsp&nbspWHAT I LEARNED</p>
+    <p class="list-group-item">{{ entry.learned }}</p>
+  <br>
+  <br>
+  <br>
+  <p class="small-header">
+    {% if owner == True %}
+    <a class="btn-edit" href="{{url_for('edit',entry=entry.title|slugify, value='resources')}}">EDIT</a>
+    {% endif %}
+    &nbsp&nbspRESOURCES TO REMEMBER
+  </p>
+  <div class="d-flex w-100 justify-content-start">
+    {% for resource in entry.resources|string_filter %}
+    {% if resource == '' %}
+    <p class="list-group-itm">NO RESOURCES</p>
+    {% else %}
+    <p class="list-group-itm">{{ resource }}</p>
+    {% endif %}
+    {% endfor %}
+  </div>
+  <br>
+  <br>
+  <br>
+  <p class="small-header">
+    {% if owner == True %}
+    <a class="btn-edit" href="{{url_for('edit',entry=entry.title|slugify, value='tags')}}">EDIT</a>
+    {% endif %}
+    &nbsp&nbspTAGS - CLICK ON TAG FOR SIMILAR TAGGED JOURNALS
+  </p>
+  <div class="d-flex w-100 justify-content-start">
+    {% for tag in entry.tags|string_filter %}
+    {% if tag == '' %}
+    <p class="list-group-itm">NO TAGS</p>
+    {% else %}
+    <a class="list-group-itm" href="{{url_for('tags',tag=tag|slugify)}}">
+    {{ tag }}
+    </a>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

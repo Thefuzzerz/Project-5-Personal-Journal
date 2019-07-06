@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% block title %}{{ super() }} - Edit Entry{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<div class="container">
+  <h1>{{ edit_entry.title.upper() }}</h1>
+  <br>
+  <form method="post">
+    {% if value == 'date'%}
+    <h5>Edit Date</h5>
+    <br>
+    <label for="date">New Date</label>
+    <input id="date" type="date" name="editValue" required><br>
+    <input type="submit" value="Update Date" class="button button-secondary">
+    <a href="{{ url_for('index')}}" class="button button-secondary">Cancel</a>
+    {% elif value == 'title' %}
+    <h5>Edit Title</h5>
+    <br><br>
+    <label for="date">New Title</label>
+    <input id="title" type="text" name="editValue" required><br>
+    <input type="submit" value="Update Title" class="button button-secondary">
+    <a href="{{ url_for('index')}}" class="button button-secondary">Cancel</a>
+    {% elif value == 'time_spent' %}
+    <h5>Edit Time Spent</h5>
+    <br><br>
+    <label for="date">New Time Spent</label>
+    <input id="time-spent" type="number" name="editValue" required><br>
+    <input type="submit" value="Update Time Spent" class="button button-secondary">
+    <a href="{{ url_for('index')}}" class="button button-secondary">Cancel</a>
+    {% elif value == 'learned' %}
+    <h5>Edit What You Learned</h5>
+    <br><br>
+    <label for="date">New What I Learned</label>
+    <textarea id="what-i-learned" rows="5" name="editValue" required></textarea>
+    <input type="submit" value="Update What You Learned" class="button button-secondary">
+    <a href="{{ url_for('index')}}" class="button button-secondary">Cancel</a>
+    {% elif value == 'resources' %}
+    <h5>Edit Resources to Remember</h5>
+    <br><br>
+    <label for="date">New Resources to Remember - Seperate With a Comma</label>
+    <textarea id="resources-to-remember" rows="5" name="editValue" required></textarea>
+    <input type="submit" value="Update Resources to remember" class="button button-secondary">
+    <a href="{{ url_for('index')}}" class="button button-secondary">Cancel</a>
+    {% elif value == 'tags' %}
+    <h5>Edit Tags</h5>
+    <br><br>
+    <label for="date">New Tags - Seperate With a Comma</label>
+    <textarea id="tags" rows="3" name="editValue"></textarea>
+    <input type="submit" value="Update Tags" class="button button-secondary">
+    <a href="{{ url_for('index')}}" class="button button-secondary">Cancel</a>
+    {% endif %}
+  </form>
+</div>
+
+
+{% endblock %}

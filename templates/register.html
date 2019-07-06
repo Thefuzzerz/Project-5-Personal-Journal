@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %}{{ super() }} - Register User{% endblock %}
+
+{% block content %}
+<div class="container">
+  <p id="main_header">Register</p>
+      {% from 'macros.html' import render_field %}
+      <form method='POST' action=''>
+      {{ form.hidden_tag() }}
+      <ul class="list-group">
+        <li style="border:none;" class="list-group-item">{{ render_field(form.username) }}</li>
+        <li style="border:none;" class="list-group-item">{{ render_field(form.password) }}</li>
+        <li style="border:none;" class="list-group-item">{{ render_field(form.password2) }}</li>
+        <li style="border:none;" class="list-group-item">
+          <input type="submit" class="button button-secondary" value="Register">
+          <a href="{{ url_for('index') }}" class="button button-secondary">Cancel</a>
+        </li>
+      </ul>
+      </form>
+</div>
+{% endblock %}

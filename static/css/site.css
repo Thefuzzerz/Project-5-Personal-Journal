@@ -1,0 +1,331 @@
+
+
+/* ==========================================================================
+   Global Styles
+   ========================================================================== */
+
+
+a {
+	padding: 20px;
+	border: 1px solid rgba(0,0,0,.125);
+	color: black;
+}
+
+a:hover {
+	background-color: rgba(0,0,0,.125);
+	color: white;
+}
+body {
+	font-size: 16px;
+	color: #4b4b4b;
+	font-family: 'Cousine', serif;
+	font-weight: 400;
+}
+.break-bar {
+	display: block;
+	width: 100%;
+	height: 10px;
+	background-color: #4b4b4b;
+}
+.break-bar-edit {
+		display: block;
+		width: 100%;
+		height: 42px;
+		background-color: #4b4b4b;
+		justify-content: flex-end;
+}
+.container {
+	margin: 0 auto;
+	padding: 0 25px 25px
+}
+header .site-header {
+	margin: 0 auto;
+	height: 95px;
+}
+header .logo i {
+	color: #678f89;
+	margin: 20px 0 0 -5px;
+	float: left;
+	font-size: 40px;
+}
+header .button {
+	float: right;
+	margin: 33px 0 0 0;
+}
+footer {
+	position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+	text-align: center;
+	color: white;
+	background-color: #4b4b4b;
+	padding: 35px 0;
+}
+.small-header {
+	vertical-align: middle;
+	width: 100%;
+	height: auto;
+	padding-left: 5px;
+	background-color: #4b4b4b;
+	color: white;
+}
+.small-header a{
+	margin-left: -7px;
+}
+
+
+/* ==========================================================================
+   Button Styles
+   ========================================================================== */
+
+.btn-edit {
+	padding-left: 30px;
+	padding-right: 30px;
+	display: inline-block;
+	color: black;
+	font-weight: 400;
+	text-align: center;
+	background: white;
+	border-bottom: None;
+}
+.btn-edit:hover {
+	background-color: #ffc107;
+}
+.button {
+	padding: 8px 10px 6px 10px;
+	background: #678f89;
+	border: 2px solid #678f89;
+	border-radius: 4px;
+	text-decoration: none;
+	color: #FFF;
+	position: relative;
+	text-align: center;
+	font-size: 14px;
+}
+.button.button-secondary {
+	background: #FFF;
+	border: 2px solid #e1e1e1;
+	color: #404a49;
+}
+.button.button-secondary:hover {
+	background-color: #ffc107;
+}
+.button.icon-right {
+	border: 2px solid #001a00;
+	padding-right: 30px;
+	top: -10px;
+}
+.button.icon-left {
+	padding-left: 30px;
+	top: -10px;
+}
+.button.icon-right i {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+}
+.button.icon-left i {
+	position: absolute;
+	top: 3px;
+	left: 3px;
+}
+.button:focus {
+	outline: 0;
+}
+
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+h1,
+h2,
+h3 {
+	margin: 0;
+	font-weight: 400;
+	line-height: 1em;
+	color: #000;
+}
+h1 {
+	padding-top: 30px;
+	font-size: 44px;
+}
+h2 {
+	font-size: 32px;
+}
+h2 a {
+	text-decoration: none;
+	color: #000;
+}
+h3 {
+	font-size: 18px;
+	font-family: 'Work Sans', serif;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+h6 {
+	line-height: inherit;
+	margin-left: 110px;
+	color: white;
+	font-size: 18px;
+	font-family: 'Work Sans', serif;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+p {
+	line-height: 1.8em;
+	font-size: 18px;
+}
+p a {
+	border-bottom: 2px solid #678f89;
+	padding: 0;
+	color: #678f89;
+	text-decoration: none;
+}
+ul li {
+	line-height: 1.8em;
+	font-size: 18px;
+}
+ul li a {
+	align-items: center;
+	border-bottom: 2px solid #678f89;
+	line-height: 1.8em;
+	color: black;
+	text-decoration: none;
+}
+
+/* ==========================================================================
+   Specific ID
+   ========================================================================== */
+
+#main_header {
+	font-family: 'Work Sans', serif;
+	font-size: 80px;
+	text-align: center;
+}
+
+#minor-header {
+	font-size: 40;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 35px;
+}
+
+
+
+/* ==========================================================================
+   Page Styles
+   ========================================================================== */
+
+.display-anchor:hover {
+	background: #eae8e8;
+}
+.div-align {
+	margin-left: -15px;
+}
+.div-top-right {
+	margin-top: 17px;
+	padding-left: 100px;
+	display: inline-block;
+}
+.entry-list,
+.edit-entry,
+.new-entry {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 70px 0 150px 0;
+}
+.edit-entry h2,
+.new-entry h2 {
+	margin-bottom: 35px;
+}
+.entry-list article {
+	margin-bottom: 70px;
+	text-align: center;
+}
+.entry-list article:last-child {
+	margin-bottom: 0;
+}
+.entry-list article h2 {
+	margin-bottom: 8px;
+}
+.entry-list.single {
+	padding-bottom: 70px;
+}
+.entry-list.single time {
+	font-size: 18px;
+}
+.entry {
+	max-width: 800px;
+	margin: 75px auto 0 auto;
+	text-align: left;
+}
+.entry p {
+	margin-bottom: 40px;
+}
+.edit {
+	padding-bottom: 80px;
+	text-align: center;
+	margin: 0 auto;
+}
+.edit a {
+	font-weight: 400;
+	text-transform: uppercase;
+	font-size: 18px;
+}
+.list-group-itm {
+  position: relative;
+  display: block;
+  padding: .75rem 1.25rem;
+	background-color: #fff;
+	border: 1px solid rgba(0,0,0,.125);
+}
+
+
+
+
+/* ==========================================================================
+   Form Styles
+   ========================================================================== */
+
+
+form label {
+	display: block;
+	margin-bottom: 8px;
+}
+form input[type=text],
+form input[type=password],
+form input[type=number],
+form input[type=date],
+form textarea {
+	border: 2px solid #4b4b4b;
+	font-size: 18px;
+	line-height: 1.8em;
+	padding:10px 13px;
+	margin-bottom: 30px;
+	border-radius: 4px;
+	width: calc(100% - 32px);
+}
+form input[type=text]:focus,
+form input[type=date]:focus,
+form input[type=number]:focus,
+form input[type=password]:focus,
+form textarea:focus {
+	outline: 0;
+	border-color: gray;
+}
+form input[type=text]:hover,
+form input[type=number]:hover,
+form input[type=password]:hover,
+form input[type=date]:hover,
+form textarea:hover {
+	border-color: gray;
+}
+.edit-entry form textarea,
+.new-entry form textarea {
+	min-height: 200px;
+}
+input[type=submit] {
+	margin-right: 5px;
+}

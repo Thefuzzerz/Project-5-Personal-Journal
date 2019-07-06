@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>MyJournal - Login</title>
+        <link href="https://fonts.googleapis.com/css?family=Cousine:400" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans:600" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/normalize.css">
+        <link rel="stylesheet" href="/static/css/site.css">
+    </head>
+    <body>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+               <p style="text-align:center; background-color: #ffc107;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <p id="main_header">Login</p>
+      <div class="container">
+        <div class="entry-list">
+          {% from 'macros.html' import render_field %}
+          {% block content %}
+          <form method='POST' action=''>
+          {{ form.hidden_tag() }}
+          <div class="row">
+            <div>
+              {{ render_field(form.username) }}
+            </div>
+            <div>
+              {{ render_field(form.password) }}
+            </div>
+          </div>
+          <div class="u-full-width">
+            <input type="submit" class="button button-secondary" value="Login">
+            <a href="{{ url_for('index') }}" class="button button-secondary">Cancel</a>
+          </div>
+          </form>
+          {% endblock %}
+        </div>
+      </div>
+    </body>
