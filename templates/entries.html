@@ -9,7 +9,9 @@
       <div class="d-flex w-100 justify-content-between">
         <a href="{{url_for('details', entry=entry.title|slugify)}}" class="display-anchor list-group-itm list-group-item-action">
           <h1 class="entry_title mb-2">{{ entry.title|title }}</h1>
-          <small>Date: {{ entry.date.strftime('%Y-%m-%d') }}</small>
+          <small>Date Created: {{ entry.date_created.strftime('%Y-%m-%d') }}</small>
+          <br>
+          <small>Journal Date: {{ entry.date.strftime('%Y-%m-%d') }}</small>
         </a>
       </div>
       <p class="small-header">TAGS - CLICK ON TAG FOR SIMILAR TAGGED JOURNALS</p>

@@ -40,9 +40,6 @@ class User(UserMixin, Model):
         return Entry.select().where(
             Entry.user == self).order_by(Entry.date.desc())
 
-    def most_recent(self):
-        return Entry.get(Entry.user == self)
-
 
 class Entry(Model):
     user = ForeignKeyField(model=User, related_name='entries')
