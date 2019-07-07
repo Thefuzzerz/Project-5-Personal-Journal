@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p id="main_header">Journal Tags</p>
+<div class="jumbotron">
+  <small>CLICK ON TAGS TO DISPLAY JOURNALS WITH THAT TAG</small>
+  <br>
+  <br>
+  <div class="d-flex flex-row flex-wrap w-100 justify-content-start">
+    {% for tag in tags %}
+    <a class="list-group-itm" href="{{url_for('tags',tag=tag|slugify)}}">{{ tag }}&nbsp&nbsp<span class="badge badge-secondary">{{ tag|count_filter }}</span></a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

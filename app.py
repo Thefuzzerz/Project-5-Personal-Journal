@@ -310,6 +310,21 @@ def tags(tag):
                            entries_tagged=entries_tagged)
 
 
+@app.route('/view-tags')
+@login_required
+def view_tags():
+    """Route to view all tags in database. Duplicates removed."""
+    tag_entries = models.Entry.select()
+    tag_list = []
+    for entry in tag_entries:
+        split_tag = entry.tags.split(',')
+        for item in split_tag:
+            tag_list.append(item)
+    tag_list = list(set(tag_list))
+
+    return render_template('view-tags.html', tags=tag_list)
+
+
 # ----- TEMPLATE FILTERS ----- #
 
 
