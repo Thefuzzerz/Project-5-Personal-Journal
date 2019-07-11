@@ -68,12 +68,12 @@
     &nbsp&nbspTAGS - CLICK ON TAG FOR SIMILAR TAGGED JOURNALS
   </p>
   <div class="d-flex w-100 justify-content-start">
-    {% for tag in entry.tags|string_filter %}
+    {% for tag in entry.tagged %}
     {% if tag == '' %}
     <p class="list-group-itm">NO TAGS</p>
     {% else %}
-    <a class="list-group-itm" href="{{url_for('tags',tag=tag|slugify)}}">
-    {{ tag }}
+    <a class="list-group-itm" href="">
+    {{ tag.tag }}
     </a>
     {% endif %}
     {% endfor %}

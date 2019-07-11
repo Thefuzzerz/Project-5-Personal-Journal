@@ -32,9 +32,6 @@ class User(UserMixin, Model):
         except IntegrityError:
             raise ValueError('User Exists')
 
-    def get_tag_journal(self, tag):
-        return Entry.select().where(
-            (Entry.user == self) & Entry.tags.contains(tag))
 
     def user_journal(self):
         return Entry.select().where(
@@ -43,7 +40,6 @@ class User(UserMixin, Model):
 
 class Entry(Model):
     user = ForeignKeyField(model=User, related_name='entries')
-    tags = CharField(max_length=200)
     title = CharField(max_length=40, unique=True)
     date = DateTimeField(default=datetime.datetime.now().strftime('%Y-%m-%d'))
     date_created = DateTimeField(default=datetime.datetime.now())
@@ -56,7 +52,7 @@ class Entry(Model):
         order_by = ('-date_created',)
 
     @classmethod
-    def create_entry(cls, user, tags, title, date,
+    def create_entry(cls, user, title, date,
                      time_spent, learned, resources):
         try:
             if '-' in title:
@@ -64,7 +60,6 @@ class Entry(Model):
             else:
                 cls.create(
                     user=user,
-                    tags=tags,
                     title=title,
                     date=date,
                     time_spent=time_spent,
@@ -76,7 +71,16 @@ class Entry(Model):
             flash('Entry with Title Already Exists', "errors")
 
 
+
+class Tags(Model):
+    tag = CharField(max_length=40)
+    entry = ForeignKeyField(model=Entry, related_name='tagged')
+
+    class Meta:
+        database = DATABASE
+
+
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([User, Entry], safe=True)
+    DATABASE.create_tables([User, Entry, Tags], safe=True)
     DATABASE.close()

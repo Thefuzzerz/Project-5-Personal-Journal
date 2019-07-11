@@ -16,12 +16,12 @@
       </div>
       <p class="small-header">TAGS - CLICK ON TAG FOR SIMILAR TAGGED JOURNALS</p>
       <div class="d-flex w-100 justify-content-start">
-        {% for tag in entry.tags|string_filter %}
+        {% for tag in entry.tagged %}
         {% if tag == '' %}
         <p>No Tags</p>
         {% else %}
-        <a class="list-group-itm" href="{{url_for('tags',tag=tag|slugify)}}">
-        {{ tag }}
+        <a class="list-group-itm" href="{{url_for('tags',tag=tag.tag|slugify)}}">
+        {{ tag.tag }}
         </a>
         {% endif %}
         {% endfor %}

@@ -120,6 +120,10 @@ def delete(entry):
         try:
             choice = request.form['choice']
             if choice == 'Yes':
+                delete_tags = models.Tags.select().where(
+                    models.Tags.entry == delete_entry)
+                for tag in delete_tags:
+                    tag.delete_instance()
                 delete_entry.delete_instance()
                 flash(f"{delete_entry.title} Successfully Deleted", "success")
             if choice == 'No':
@@ -141,6 +145,21 @@ def edit(entry, value):
     """
     user = g.user
     rev_slug = entry.replace('-', ' ')
+
+    def delete_tag(entry):
+        """ Func to delete existing tags related to entry. """
+        entry_tags = models.Tags.select().where(models.Tags.entry == entry)
+        for tag in entry_tags:
+            tag.delete_instance()
+
+    def create_tag(raw_tag):
+        """
+        Func to remove whitespace before and after commas to clean
+        tags for entry.
+        """
+        capped_tag = raw_tag.upper()
+        split_tag = capped_tag.split(',')
+        return split_tag
     try:
         edit_entry = models.Entry.get(models.Entry.title ** rev_slug)
     except models.DoesNotExist:
@@ -171,14 +190,11 @@ def edit(entry, value):
                 if value == 'resources':
                     edit_entry.resources = request.form['editValue']
                 if value == 'tags':
-                    if invalid_char(request.form['editValue'],
-                                    tag=True) is False:
-                        flash('Invalid Character Used', "errors")
-                        return redirect(url_for('edit',
-                                                entry=entry,
-                                                value=value))
-                    else:
-                        edit_entry.tags = request.form['editValue']
+                    delete_tag(edit_entry)
+                    entry_tags = create_tag(request.form['editValue'])
+                    entry_tags = [item.strip() for item in entry_tags]
+                    for tag in entry_tags:
+                        models.Tags.create(tag=tag, entry=edit_entry)
                 edit_entry.save()
                 flash(f'{rev_slug.upper()} Updated Successfully', "success")
                 return redirect(url_for('details', entry=edit_entry.title))
@@ -253,25 +269,35 @@ def new():
     Route to create new entry. (-) Character is not allowed in the title
     and tags to prevent issues with slugification of values.
     """
+    def create_tag(raw_tag):
+        """
+        Func to remove whitespace before and after commas to clean
+        tags for entry.
+        """
+        capped_tag = raw_tag.upper()
+        split_tag = capped_tag.split(',')
+        return split_tag
     if request.method == 'POST':
         if invalid_char(request.form['title']) is False:
             flash("Invalid Character in Title Used")
-            return redirect(url_for('new'))
-        if invalid_char(request.form['form_tag'], tag=True) is False:
-            flash("Invalid Character in Tags Used")
             return redirect(url_for('new'))
         try:
             date_format = datetime.datetime.strptime(
                 request.form['date'], '%Y-%m-%d').date()
             models.Entry.create_entry(
                 user=g.user.id,
-                tags=request.form['form_tag'].upper(),
                 title=request.form['title'],
                 date=date_format,
                 time_spent=request.form['timeSpent'],
                 learned=request.form['whatILearned'],
                 resources=request.form['ResourcesToRemember'],
             )
+            entry_tags = create_tag(request.form['form_tag'])
+            entry_tags = [item.strip() for item in entry_tags]
+            get_entry = models.Entry.get(
+                models.Entry.title == request.form['title'])
+            for tag in entry_tags:
+                models.Tags.create(tag=tag, entry=get_entry)
             return redirect(url_for('new'))
         except ValueError:
             flash("Error Creating Entry")
@@ -295,31 +321,35 @@ def register():
 @app.route('/tags/<string:tag>')
 @login_required
 def tags(tag):
-    """Route to log in users."""
+    """Route to view entries in relation to tags."""
     rev_slug = tag.replace('-', ' ').upper()
+    user = g.user
     try:
-        entries_tagged = models.Entry.select().where(
-            models.Entry.tags.contains(rev_slug))
+        entries_query = models.Entry.select().join(models.Tags).where(
+            models.Tags.tag == rev_slug
+        )
     except models.DoesNotExist:
         abort(404)
-    user = g.user
-    tagged_journals = user.get_tag_journal(rev_slug)
+    try:
+        tagged_journals = models.Entry.select().join(models.Tags).where(
+            (models.Tags.tag == rev_slug) & (models.Entry.user == user.id))
+    except models.DoesNotExist:
+        abort(404)
+
     return render_template('tags.html',
                            tagged_journals=tagged_journals,
                            user=user, tag=rev_slug,
-                           entries_tagged=entries_tagged)
+                           entries_query=entries_query)
 
 
 @app.route('/view-tags')
 @login_required
 def view_tags():
     """Route to view all tags in database. Duplicates removed."""
-    tag_entries = models.Entry.select()
+    tag_entries = models.Tags.select()
     tag_list = []
-    for entry in tag_entries:
-        split_tag = entry.tags.split(',')
-        for item in split_tag:
-            tag_list.append(item)
+    for tag in tag_entries:
+        tag_list.append(tag.tag)
     tag_list = list(set(tag_list))
 
     return render_template('view-tags.html', tags=tag_list)
@@ -341,8 +371,7 @@ def slugify(text, delim=u'-'):
 @app.template_filter()
 def count_filter(tag):
     """ Function to count number of times tag is found"""
-    user = g.user
-    entry_num = user.get_tag_journal(tag).count()
+    entry_num = models.Tags.select().where(models.Tags.tag == tag).count()
     return entry_num
 
 

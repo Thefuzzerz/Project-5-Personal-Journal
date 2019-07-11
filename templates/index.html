@@ -27,13 +27,13 @@
           </div>
         </a>
         <div class="d-flex w-100 justify-content-start">
-          <a class="disabled list-group-itm" href="#">TAGS:</a>
-          {% for tag in entry.tags|string_filter %}
+          <div class="disabled list-group-itm">TAGS:</div>
+          {% for tag in entry.tagged %}
           {% if tag == '' %}
           <a class="disabled list-group-itm" href="#">NO TAGS</a>
           {% else %}
-          <a class="list-group-itm" href="{{url_for('tags',tag=tag|slugify)}}">
-          {{ tag }}
+          <a class="list-group-itm" href="{{url_for('tags',tag=tag.tag|slugify)}}">
+          {{ tag.tag }}
           </a>
           {% endif %}
           {% endfor %}

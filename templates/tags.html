@@ -17,7 +17,7 @@
     <p style="border: 4px solid #4b4b4b; background-color:#4b4b4b; color:white;" class="list-group-item">ENTRIES WITH TAG: {{ tag }}</p>
     <br>
     <div class="d-flex justify-content-start">
-      {% for entry in entries_tagged %}
+      {% for entry in entries_query %}
       <a class="list-group-item" href="{{url_for('details', entry=entry.title|slugify)}}">{{ entry.title }}</a>
       {% endfor %}
     </div>
